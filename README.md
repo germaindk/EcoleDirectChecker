@@ -7,8 +7,8 @@ this is a proxyless Checker for www.ecoledirecte.com.
 
 # To Do
 
-- add Threading
-- CPM counteur
+- ✔️add Threading
+- ❌CPM counteur
 ## Installation
 
 Install my-project with npm
