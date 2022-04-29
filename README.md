@@ -9,6 +9,7 @@ this is a proxyless Checker for www.ecoledirecte.com.
 
 - ✔️add Threading
 - ❌CPM counteur
+- ❌optimisation of the checking proses
 ## Installation
 
 Install my-project with npm
