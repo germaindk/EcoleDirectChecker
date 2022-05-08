@@ -12,7 +12,7 @@ this is a proxyless Checker for www.ecoledirecte.com.
 - ❌optimisation of the checking proses
 ## Installation
 
-Install my-project with npm
+Install my-project with python
 
 ```bash
   pip install -r requirements.txt
